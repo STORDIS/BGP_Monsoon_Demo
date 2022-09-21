@@ -1,0 +1,30 @@
+--------------LEAF-2------------
+sonic-cli 
+configure terminal 
+interface Loopback 0 
+ip address 10.10.130.21/32 
+interface Ethernet 0 
+ip address 1.1.1.3/31 
+no shutdown 
+show ip interfaces 
+end 
+exit 
+sudo config save -y  
+------------------------------
+sonic-cli 
+configure terminal 
+router bgp 65102 
+router-id 10.10.130.21
+address-family ipv4 unicast 
+redistribute connected 
+exit 
+neighbor 1.1.1.2 
+remote-as 65000 
+address-family ipv4 unicast 
+activate 
+end 
+exit 
+sudo config save -y   
+------------------------------
+show runningconfiguration bgp 
+show bgp ipv4 unicast summary 
